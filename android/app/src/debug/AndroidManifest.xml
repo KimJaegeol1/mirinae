@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  debug 빌드에만 병합되는 매니페스트 (로컬 MVP 킷에서 추가).
+  나중에 PC에서 띄운 mock/개발 서버(http://…)에 실기기로 붙어 볼 때 필요합니다.
+  release 빌드에는 영향이 없고, 수동입력 모드에서는 애초에 네트워크를 쓰지 않습니다.
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <application android:usesCleartextTraffic="true" />
+</manifest>

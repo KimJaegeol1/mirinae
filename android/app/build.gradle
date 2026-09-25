@@ -1,0 +1,113 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'org.jetbrains.kotlin.plugin.compose'
+}
+
+def releaseApiBaseUrl = providers.gradleProperty('SSEULDON_API_BASE_URL')
+    .orElse(providers.environmentVariable('SSEULDON_API_BASE_URL'))
+    .getOrElse('')
+def releaseChannel = providers.gradleProperty('SSEULDON_CHANNEL')
+    .orElse(providers.environmentVariable('SSEULDON_CHANNEL'))
+    .getOrElse('production')
+def releaseKeystoreFile = providers.environmentVariable('SSEULDON_KEYSTORE_FILE').getOrElse('')
+def releaseKeystorePassword = providers.environmentVariable('SSEULDON_KEYSTORE_PASSWORD').getOrElse('')
+def releaseKeyAlias = providers.environmentVariable('SSEULDON_KEY_ALIAS').getOrElse('')
+def releaseKeyPassword = providers.environmentVariable('SSEULDON_KEY_PASSWORD').getOrElse('')
+
+android {
+    namespace 'kr.sseuldon.app'
+    compileSdk 36
+
+    defaultConfig {
+        applicationId 'kr.sseuldon.app'
+        minSdk 23
+        targetSdk 36
+        versionCode 8
+        versionName '0.7.0-pilot'
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+    }
+
+    signingConfigs {
+        release {
+            if (releaseKeystoreFile && releaseKeystorePassword && releaseKeyAlias && releaseKeyPassword) {
+                storeFile file(releaseKeystoreFile)
+                storePassword releaseKeystorePassword
+                keyAlias releaseKeyAlias
+                keyPassword releaseKeyPassword
+            }
+        }
+    }
+
+    buildTypes {
+        debug {
+            buildConfigField 'String', 'API_BASE_URL', "\"${releaseApiBaseUrl ?: 'http://10.0.2.2:8787'}\""
+            buildConfigField 'String', 'API_CHANNEL', "\"${releaseApiBaseUrl ? releaseChannel : 'test'}\""
+        }
+        release {
+            buildConfigField 'String', 'API_BASE_URL', "\"${releaseApiBaseUrl}\""
+            buildConfigField 'String', 'API_CHANNEL', "\"${releaseChannel}\""
+            signingConfig signingConfigs.release
+        }
+    }
+
+    buildFeatures {
+        compose true
+        buildConfig true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+
+    testOptions {
+        unitTests.all {
+            useJUnit()
+        }
+    }
+}
+
+tasks.register('verifyReleaseApiBaseUrl') {
+    doLast {
+        if (!releaseApiBaseUrl.startsWith('https://')) {
+            throw new GradleException(
+                'Release build requires SSEULDON_API_BASE_URL=https://... as a Gradle property or environment variable.'
+            )
+        }
+        if (!(releaseChannel in ['test', 'production'])) {
+            throw new GradleException(
+                'SSEULDON_CHANNEL must be test or production.'
+            )
+        }
+        if (!releaseKeystoreFile || !file(releaseKeystoreFile).exists()) {
+            throw new GradleException(
+                'Release build requires SSEULDON_KEYSTORE_FILE pointing to the pilot signing keystore.'
+            )
+        }
+        if (!releaseKeystorePassword || !releaseKeyAlias || !releaseKeyPassword) {
+            throw new GradleException(
+                'Release build requires the SSEULDON_KEYSTORE_PASSWORD, SSEULDON_KEY_ALIAS, and SSEULDON_KEY_PASSWORD environment variables.'
+            )
+        }
+    }
+}
+
+afterEvaluate {
+    tasks.named('preReleaseBuild').configure {
+        dependsOn(tasks.named('verifyReleaseApiBaseUrl'))
+    }
+}
+
+dependencies {
+    implementation 'androidx.activity:activity-ktx:1.13.0'
+    implementation 'androidx.core:core:1.17.0'
+    implementation 'androidx.glance:glance-appwidget:1.1.1'
+    implementation 'androidx.work:work-runtime-ktx:2.11.2'
+
+    testImplementation 'junit:junit:4.13.2'
+}

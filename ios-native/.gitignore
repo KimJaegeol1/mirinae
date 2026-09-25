@@ -1,0 +1,7 @@
+.DS_Store
+DerivedData/
+Mirinae.xcodeproj/
+*.xcarchive
+*.ipa
+*.xcuserstate
+xcuserdata/

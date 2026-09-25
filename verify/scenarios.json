@@ -1,0 +1,255 @@
+[
+ {
+  "name": "01_납부일전",
+  "today": "2026-08-04",
+  "balance": 1243000,
+  "buffer": 100000,
+  "incomeMode": "monthly",
+  "incomeDay": 25,
+  "nextIncomeDate": "2026-08-25",
+  "grace": 3,
+  "costs": [
+   {
+    "id": "rent",
+    "name": "월세",
+    "amount": 500000,
+    "dueDate": "2026-08-05",
+    "recurrence": "monthly",
+    "resolutions": []
+   }
+  ]
+ },
+ {
+  "name": "02_납부일다음날_미납",
+  "today": "2026-08-06",
+  "balance": 1243000,
+  "buffer": 100000,
+  "incomeMode": "monthly",
+  "incomeDay": 25,
+  "nextIncomeDate": "2026-08-25",
+  "grace": 3,
+  "costs": [
+   {
+    "id": "rent",
+    "name": "월세",
+    "amount": 500000,
+    "dueDate": "2026-08-05",
+    "recurrence": "monthly",
+    "resolutions": []
+   }
+  ]
+ },
+ {
+  "name": "03_이번회차_납부완료",
+  "today": "2026-08-06",
+  "balance": 1243000,
+  "buffer": 100000,
+  "incomeMode": "monthly",
+  "incomeDay": 25,
+  "nextIncomeDate": "2026-08-25",
+  "grace": 3,
+  "costs": [
+   {
+    "id": "rent",
+    "name": "월세",
+    "amount": 500000,
+    "dueDate": "2026-08-05",
+    "recurrence": "monthly",
+    "resolutions": [
+     {
+      "period": "2026-08",
+      "status": "paid",
+      "resolvedAt": 1754000000000
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "name": "04_오늘_부족_복합",
+  "today": "2026-09-13",
+  "balance": 400000,
+  "buffer": 50000,
+  "incomeMode": "irregular",
+  "incomeDay": 25,
+  "nextIncomeDate": "2026-09-20",
+  "grace": 3,
+  "costs": [
+   {
+    "id": "tel",
+    "name": "통신비",
+    "amount": 55000,
+    "dueDate": "2026-09-15",
+    "recurrence": "monthly",
+    "resolutions": []
+   },
+   {
+    "id": "rent",
+    "name": "월세",
+    "amount": 300000,
+    "dueDate": "2026-09-25",
+    "recurrence": "monthly",
+    "resolutions": []
+   },
+   {
+    "id": "ott",
+    "name": "넷플릭스",
+    "amount": 17000,
+    "dueDate": "2026-09-10",
+    "recurrence": "once",
+    "resolutions": []
+   }
+  ]
+ },
+ {
+  "name": "05_경계_5만원_정확히",
+  "today": "2026-09-13",
+  "balance": 150000,
+  "buffer": 0,
+  "incomeMode": "monthly",
+  "incomeDay": 25,
+  "nextIncomeDate": "2026-09-25",
+  "grace": 3,
+  "costs": [
+   {
+    "id": "a",
+    "name": "관리비",
+    "amount": 100000,
+    "dueDate": "2026-09-20",
+    "recurrence": "monthly",
+    "resolutions": []
+   }
+  ]
+ },
+ {
+  "name": "06_경계_49999",
+  "today": "2026-09-13",
+  "balance": 149999,
+  "buffer": 0,
+  "incomeMode": "monthly",
+  "incomeDay": 25,
+  "nextIncomeDate": "2026-09-25",
+  "grace": 3,
+  "costs": [
+   {
+    "id": "a",
+    "name": "관리비",
+    "amount": 100000,
+    "dueDate": "2026-09-20",
+    "recurrence": "monthly",
+    "resolutions": []
+   }
+  ]
+ },
+ {
+  "name": "07_주의선_reserved4분의1",
+  "today": "2026-09-13",
+  "balance": 999000,
+  "buffer": 0,
+  "incomeMode": "monthly",
+  "incomeDay": 25,
+  "nextIncomeDate": "2026-09-25",
+  "grace": 3,
+  "costs": [
+   {
+    "id": "a",
+    "name": "월세",
+    "amount": 800000,
+    "dueDate": "2026-09-20",
+    "recurrence": "monthly",
+    "resolutions": []
+   }
+  ]
+ },
+ {
+  "name": "08_일일가용_2만미만",
+  "today": "2026-09-01",
+  "balance": 1050000,
+  "buffer": 0,
+  "incomeMode": "monthly",
+  "incomeDay": 30,
+  "nextIncomeDate": "2026-09-30",
+  "grace": 3,
+  "costs": [
+   {
+    "id": "a",
+    "name": "월세",
+    "amount": 800000,
+    "dueDate": "2026-09-20",
+    "recurrence": "monthly",
+    "resolutions": []
+   }
+  ]
+ },
+ {
+  "name": "09_31일_짧은달_보정",
+  "today": "2026-02-10",
+  "balance": 2000000,
+  "buffer": 100000,
+  "incomeMode": "monthly",
+  "incomeDay": 25,
+  "nextIncomeDate": "2026-02-25",
+  "grace": 3,
+  "costs": [
+   {
+    "id": "a",
+    "name": "보험",
+    "amount": 90000,
+    "dueDate": "2026-01-31",
+    "recurrence": "monthly",
+    "resolutions": []
+   }
+  ]
+ },
+ {
+  "name": "10_불규칙소득_유예만료",
+  "today": "2026-09-13",
+  "balance": 500000,
+  "buffer": 100000,
+  "incomeMode": "irregular",
+  "incomeDay": 25,
+  "nextIncomeDate": "2026-09-05",
+  "grace": 3,
+  "costs": [
+   {
+    "id": "a",
+    "name": "통신비",
+    "amount": 55000,
+    "dueDate": "2026-09-28",
+    "recurrence": "monthly",
+    "resolutions": []
+   }
+  ]
+ },
+ {
+  "name": "11_연도전환",
+  "today": "2026-12-20",
+  "balance": 900000,
+  "buffer": 100000,
+  "incomeMode": "monthly",
+  "incomeDay": 25,
+  "nextIncomeDate": "2026-12-25",
+  "grace": 3,
+  "costs": [
+   {
+    "id": "a",
+    "name": "월세",
+    "amount": 300000,
+    "dueDate": "2026-12-05",
+    "recurrence": "monthly",
+    "resolutions": []
+   }
+  ]
+ },
+ {
+  "name": "12_고정비없음_불규칙_미정",
+  "today": "2026-09-13",
+  "balance": 80000,
+  "buffer": 0,
+  "incomeMode": "irregular",
+  "incomeDay": 25,
+  "nextIncomeDate": "",
+  "grace": 3,
+  "costs": []
+ }
+]

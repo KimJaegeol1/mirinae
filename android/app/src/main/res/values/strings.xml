@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">미리내</string>
+    <string name="widget_description">미리 낼 고정비와 안전완충액을 제외한 지금 써도 되는 돈</string>
+    <string name="widget_loading">미리내를 불러오는 중…</string>
+</resources>

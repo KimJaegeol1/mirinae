@@ -1,0 +1,89 @@
+# XcodeGen 프로젝트 정의. `xcodegen generate` 로 Mirinae.xcodeproj 를 만든다.
+# Bundle ID / App Group 을 바꿔야 하면 여기(3곳) + Shared/MirinaeStore.swift + 두 .entitlements 를 함께 바꾼다.
+name: Mirinae
+options:
+  bundleIdPrefix: kr.sseuldon
+  deploymentTarget:
+    iOS: "16.0"
+  createIntermediateGroups: true
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    CODE_SIGN_STYLE: Automatic
+    CURRENT_PROJECT_VERSION: "1"
+    MARKETING_VERSION: "0.7.0"
+    TARGETED_DEVICE_FAMILY: "1"
+    ENABLE_USER_SCRIPT_SANDBOXING: "NO"
+targets:
+  Mirinae:
+    type: application
+    platform: iOS
+    sources:
+      - path: App
+      - path: Shared
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: kr.sseuldon.mirinae
+        CODE_SIGN_ENTITLEMENTS: App/Mirinae.entitlements
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+    info:
+      path: App/Info.plist
+      properties:
+        CFBundleDisplayName: 미리내
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        ITSAppUsesNonExemptEncryption: false
+        UILaunchScreen: {}
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+        CFBundleURLTypes:
+          - CFBundleURLName: mirinae
+            CFBundleURLSchemes:
+              - mirinae
+    dependencies:
+      - target: MirinaeWidget
+        embed: true
+  MirinaeWidget:
+    type: app-extension
+    platform: iOS
+    sources:
+      - path: Widget
+      - path: Shared
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: kr.sseuldon.mirinae.widget
+        CODE_SIGN_ENTITLEMENTS: Widget/MirinaeWidget.entitlements
+        SKIP_INSTALL: true
+        APPLICATION_EXTENSION_API_ONLY: true
+    info:
+      path: Widget/Info.plist
+      properties:
+        CFBundleDisplayName: 미리내 위젯
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.widgetkit-extension
+  MirinaeTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: Tests
+    dependencies:
+      - target: Mirinae
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: kr.sseuldon.mirinae.tests
+        GENERATE_INFOPLIST_FILE: "YES"
+schemes:
+  Mirinae:
+    build:
+      targets:
+        Mirinae: all
+        MirinaeWidget: all
+        MirinaeTests: [test]
+    run:
+      config: Debug
+    test:
+      config: Debug
+      targets:
+        - MirinaeTests
