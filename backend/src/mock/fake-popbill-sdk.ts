@@ -143,10 +143,23 @@ const service = {
     success: Success<string>,
     failure: Failure,
   ): void {
-    const account = accounts.get(key(bankCode, accountNumber));
-    if (!account) {
-      failure({ code: -18021001 });
+    if (accountNumber.endsWith("0000")) {
+      failure({ code: -18021027 });
       return;
+    }
+    // 서버(wrangler dev)를 껐다 켜면 메모리가 비워진다. 서버 DB 에는 연결이 남아 있으므로
+    // 잔액 조회가 들어오면 초기 잔액으로 조용히 다시 등록해 준다 (실제 팝빌은 등록이 유지되는 것과 같은 효과).
+    let account = accounts.get(key(bankCode, accountNumber));
+    if (!account) {
+      account = {
+        bankCode,
+        accountNumber,
+        accountName: "다시 등록된 계좌",
+        balance: seedBalance(accountNumber),
+        registeredAt: new Date().toISOString(),
+        jobRequests: 0,
+      };
+      accounts.set(key(bankCode, accountNumber), account);
     }
     account.jobRequests += 1;
     jobSequence += 1;
