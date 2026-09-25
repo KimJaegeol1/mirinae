@@ -1,0 +1,44 @@
+// 로컬 mock 실행용 설정. 운영 설정(wrangler.jsonc)과 별개이며 배포에는 쓰지 않는다.
+//   npm run mock:db   ← 처음 한 번 (로컬 D1 에 schema.sql 적용)
+//   npm run mock      ← http://localhost:8787  (제어 페이지 http://localhost:8787/mock/)
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "mirinae-mock-backend",
+  "main": "src/mock/index.mock.ts",
+  "compatibility_date": "2026-07-29",
+  "compatibility_flags": ["nodejs_compat"],
+  // 핵심: `import popbillSdk from "popbill"` 를 가짜 SDK 로 바꿔치기 (팀 코드 무수정)
+  "alias": {
+    "popbill": "./src/mock/fake-popbill-sdk.ts"
+  },
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS"
+  },
+  "vars": {
+    "MOCK_BANK": "true",
+    "POPBILL_MODE": "test",
+    "POPBILL_LINK_ID": "MOCK",
+    "POPBILL_SECRET_KEY": "mock-secret-key-not-real",
+    "POPBILL_CORP_NUM": "0000000000",
+    "POPBILL_USER_ID": "mock",
+    "POPBILL_USE_PERIOD": "1",
+    "POPBILL_IP_RESTRICT": "false",
+    "DATA_ENCRYPTION_KEY": "mirinae-local-mock-encryption-key-do-not-use-in-production",
+    "PILOT_INVITE_CODE": "MIRINAE-MOCK-2026",
+    "PILOT_ADMIN_TOKEN": "mirinae-mock-admin-token-0123456789",
+    "RETENTION_DAYS": "70",
+    "BALANCE_CACHE_MINUTES": "1",
+    "EMERGENCY_HIDE_AMOUNTS": "false"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "mirinae-mock-db",
+      "database_id": "mirinae-mock-db-local"
+    }
+  ],
+  "triggers": {
+    "crons": ["*/20 * * * *"]
+  }
+}

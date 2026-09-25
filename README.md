@@ -10,6 +10,9 @@ mirinae-local-mvp-v0.7.0/      (폴더·파일명은 일부러 영문 — 한글
 ├── android/                   ← 핸드오프 소스 그대로 (debug 빌드 가능) + 아래 2개 추가
 │   ├── app/src/debug/AndroidManifest.xml            debug 전용 cleartext 허용 (나중 로컬 서버용)
 │   └── app/src/test/.../CrossPlatformScenarioTest.kt 12개 시나리오 교차 검증 테스트
+├── backend/                   ← 【서버 기능 확인】 팀의 실제 Worker + 가짜 은행. README_MOCK.md 부터 읽기
+│   ├── src/mock/              가짜 팝빌 SDK + /mock/ 제어 페이지 (팀 코드 무수정)
+│   └── wrangler.mock.jsonc    `npm run mock` → http://localhost:8787
 ├── ios-native/                ← 【Mac 있으면】 SwiftUI + WidgetKit 네이티브 앱. README_MAC.md 부터 읽기
 │   ├── project.yml            XcodeGen 정의 → `xcodegen generate`
 │   ├── Shared/                계산기·모델·저장소·테마 (앱과 위젯이 공유)
@@ -165,5 +168,5 @@ cd android && gradlew.bat testDebugUnitTest # Android 쪽 → CrossPlatformScena
 
 ## 6. 다음 단계 후보
 
-- **mock 서버**: `POPBILL_MODE`에 mock 분기가 없어 `wrangler dev`로는 잔액을 못 받습니다. `/health` `/auth/popbill/connect` `/api/balance` `/api/budget`만 흉내 내는 작은 서버를 만들면 자동연동 경로(세션·20분 갱신·24시간 숨김·서버 계산)까지 로컬에서 재현할 수 있습니다.
+- **자동연동 경로 검증**: `backend/`에서 `npm run mock` 으로 실제 Worker 를 띄우고(팝빌만 가짜), Android 에뮬레이터·Scriptable 로 연결→잔액 변경→위젯 갱신→납부완료→해제까지 돌려볼 수 있습니다. 순서는 `backend/README_MOCK.md`.
 - **정식서비스 계산식 변경 확인**: v1 요구사항은 `max(0, …)`으로 0에서 자르는데 파일럿은 "○○원 부족"을 의도적으로 보여줍니다. 클라이언트를 고치기 전에 어느 쪽이 맞는지 먼저 정하는 게 좋습니다.

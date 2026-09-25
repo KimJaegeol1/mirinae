@@ -1,0 +1,34 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "sseuldon-popbill-staging",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-07-29",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1
+  },
+  "assets": {
+    "directory": "../../pilot-mvp/ios-scriptable/dist",
+    "binding": "ASSETS"
+  },
+  "vars": {
+    "POPBILL_MODE": "test",
+    "POPBILL_LINK_ID": "BUKWANG",
+    "POPBILL_USE_PERIOD": "1",
+    "RETENTION_DAYS": "70",
+    "BALANCE_CACHE_MINUTES": "15",
+    "POPBILL_IP_RESTRICT": "false",
+    "EMERGENCY_HIDE_AMOUNTS": "false"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "sseuldon-popbill-staging-db",
+      "database_id": "eeb5804b-cc7c-49cb-a083-2b3115d98f43"
+    }
+  ],
+  "triggers": {
+    "crons": ["7,27,47 * * * *"]
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "name": "sseuldon-cloudflare-worker",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "vitest run",
+    "check": "tsc --noEmit && vitest run && wrangler deploy --dry-run",
+    "deploy": "wrangler deploy",
+    "mock": "wrangler dev -c wrangler.mock.jsonc --port 8787 --test-scheduled",
+    "mock:db": "wrangler d1 execute mirinae-mock-db --local -c wrangler.mock.jsonc --file=./schema.sql",
+    "mock:check": "tsc --noEmit && vitest run",
+    "mock:lan": "wrangler dev -c wrangler.mock.jsonc --port 8787 --ip 0.0.0.0 --test-scheduled"
+  },
+  "dependencies": {
+    "popbill": "1.64.2"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.4",
+    "wrangler": "^4.92.0"
+  }
+}
